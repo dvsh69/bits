@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Comic Sans MS', cursive;
+    overflow: hidden;
+  }
+
+  .glow {
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 60%);
+    animation: pulse 6s infinite alternate;
+  }
+
+  @keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+  }
+
+  .card {
+    position: relative;
+    background: rgba(255,255,255,0.9);
+    padding: 45px 55px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+    z-index: 2;
+  }
+
+  h1 {
+    color: #e6005c;
+    font-size: 36px;
+    margin-bottom: 35px;
+  }
+
+  .buttons {
+    position: relative;
+    height: 100px;
+  }
+
+  button {
+    border: none;
+    border-radius: 50px;
+    padding: 15px 35px;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+
+  #yesBtn {
+    background: #ff2e63;
+    color: white;
+    margin-right: 20px;
+  }
+
+  #yesBtn:hover {
+    transform: scale(1.15);
+    background: #ff004f;
+  }
+
+  #noBtn {
+    background: #777;
+    color: white;
+    position: relative;
+  }
+
+  /* Floating hearts */
+  .heart {
+    position: absolute;
+    color: rgba(255, 0, 90, 0.6);
+    animation: floatUp 8s linear infinite;
+  }
+
+  @keyframes floatUp {
+    from {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-120vh) scale(1.5);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="glow"></div>
+
+<div class="card">
+  <h1>Happy Valentines Day Cutu💕
+ Are you going on a date this valentines??  💕</h1>
+  <div class="buttons">
+    <button id="yesBtn">No 🙄</button>
+    <button id="noBtn">Yes 😍</button>
+  </div>
+</div>
+
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+
+  let clicks = 0;
+  let scale = 1;
+
+  const noTexts = [
+    "No 🙄",
+    "Are you serious?",
+    "Think again 🤨",
+    "Last chance 😤",
+    "WHY 😭",
+    "You have no choice 😈"
+  ];
+
+  noBtn.addEventListener("click", () => {
+    clicks++;
+    scale += 0.3;
+
+    noBtn.style.transform = `scale(${scale})`;
+    noBtn.innerText = noTexts[Math.min(clicks, noTexts.length - 1)];
+
+    // Move after click (so it is clickable first)
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 100 - 50;
+    noBtn.style.transform += ` translate(${x}px, ${y}px)`;
+
+    // Make yes more tempting
+    yesBtn.style.transform = `scale(${1 + clicks * 0.12})`;
+
+    spawnHeart();
+  });
+
+  yesBtn.addEventListener("click", () => {
+    document.body.innerHTML = `
+      <div style="
+        color:white;
+        font-size:42px;
+        text-align:center;
+        animation: pop 1s infinite alternate;">
+        💖 WOHOOO 💖<br>
+        HAHA i know you are fucking single. Coder Nerd LOL!! 😘💘
+        
+      </div>
+    `;
+  });
+
+  function spawnHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.bottom = "-20px";
+    heart.style.fontSize = Math.random() * 20 + 20 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+  }
+</script>
+</body>
+</html>
